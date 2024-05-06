@@ -1,5 +1,7 @@
 const Item = require("../models/item");
+const Category = require("../models/categories")
 const asyncHandler = require("express-async-handler");
+const item = require("../models/item");
 
 exports.index = asyncHandler (async (req,res,next) =>{
     const [numitems, numcategory] = await Promise.all([
@@ -24,8 +26,19 @@ exports.item_list = asyncHandler(async(req,res,next)=>{
 });
 
 exports.item_detail = asyncHandler(async(req,res,next)=>{
-    res.send("Not Implemented: items_detail" + req.params.id)
-})
+    const [items,categories] = await Promise.all([
+        Item.findById(req.params.id).populate("category").exec(),
+    ]);
+    if (items === null){
+        const err = new Error("Item not found");
+        err.status = 404;
+        return next(err);
+    }
+    res.render("item_detail", {
+        name: items.name,
+        item: items,
+    });
+});
 
 exports.item_create_get = asyncHandler(async(req,res,next)=>{
     res.send("Not Implemented: items_create Get")

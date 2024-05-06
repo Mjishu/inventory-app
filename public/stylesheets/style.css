@@ -1,13 +1,19 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #e9ecec;
 }
 
 a {
   color: #00B7FF;
+  font-size:  16px;
 }
 
 li{
   list-style: none;
+}
+
+.itemLink{
+  font-size: 20px;
 }
 

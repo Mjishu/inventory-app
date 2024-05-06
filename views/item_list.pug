@@ -6,11 +6,12 @@ block content
     ul
       each item in item_list
         li
-          a(href=item.url) #{item.name}
+          a.itemLink(href=item.url) #{item.name}
           p #[strong In Stock:] #{item.numInstock} 
           p #[strong Price: ]$#{item.price}
 
-          p #{item.category.name} 
+          each categoryItem in item.category
+            p #{categoryItem.name} 
 
         - const hyphen = "-".repeat(30)
         p= hyphen

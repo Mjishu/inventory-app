@@ -66,11 +66,11 @@
   async function createItems() {
     console.log("Adding Books");
     await Promise.all([
-      itemCreate(0,"Ibanana 24", "Newest Phone that boasts unbelievable power, runs on potassium and charges off sunlight", 14, "983421097654", 1199.99,[categories[0]]),
+      itemCreate(0,"Ibanana 24", "Newest Phone that boasts unbelievable power, runs on potassium and charges off sunlight", 14, "983421097654", 1199.99,[categories[0],categories[5]]),
       itemCreate(1,"Outdoor Broom", "To clean up your messes", 3, "746328901234", 19.99, [categories[1]]),
       itemCreate(2,"Banana", "Yellow things that created a new Phone", 100, "583920572816", .59,[categories[2]]),
       itemCreate(3,"Fountain Pen", "Satisfying Pen to take your work to the next level", 12,"109384756291", 6.80,[categories[3]]),
-      itemCreate(4,"Heart Rate Monitor", "To watch your levels as you workout", 4, "152321923212",69.99, [categories[5]])
+      itemCreate(4,"Heart Rate Monitor", "To watch your levels as you workout", 4, "152321923212",69.99, [categories[0],categories[4]])
       
     ]);
   }
