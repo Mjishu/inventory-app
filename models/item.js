@@ -7,7 +7,7 @@ const itemSchema = new Schema({
     numInstock: {type:Number, required: true},
     sku: {type:String, required:true,minLength:5},
     price:{type:Number, required: true},
-    category: [{type:Schema.Types.ObjectId, ref:"Categories", required:true}]
+    category: [{type:Schema.Types.ObjectId, ref:"Category", required:true}]
 })
 
 itemSchema.virtual("url").get(function(){

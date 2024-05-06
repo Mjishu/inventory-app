@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  if item_list.length
+    ul
+      each item in item_list
+        li
+          a(href=item.url) #{item.name}
+          p #[strong In Stock:] #{item.numInstock} 
+          p #[strong Price: ]$#{item.price}
+          p #{item.category.name} It seems this is an object instead of an array
+        
+
+  else
+    p There are no books.
