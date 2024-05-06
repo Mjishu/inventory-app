@@ -97,12 +97,23 @@ exports.item_create_post = [
     })
 ]
 
-exports.item_delete_get = asyncHandler(async (req, res, next) => {
-    const [item, allItemCatagories]
-  });
+exports.item_delete_get = asyncHandler(async (req, res, next) => { //? Might not need allItemCategories
+    const [item, allItemCategories] = await Promise.all([Item.findById(req.params.id).exec(), Category.find({item:req.params.id}, "name").exec(),
+  ]);
+  if (item === null){
+    res.redirect("/items")
+  }
+  res.render("item_delete",{
+    title: "Delete Item", item:item, item_categories:allItemCategories
+  })
+
+});
   
 exports.item_delete_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: item delete POST");
+    //const [item, allItemCategories] = await Promise.all([Item.findById(req.params.id).exec(), Category.find({item:req.params.id}, "name").exec(),
+    //]);
+    await Item.findByIdAndDelete(req.body.itemid);
+    res.redirect("/items")
   });
   
 
