@@ -26,21 +26,21 @@ exports.item_list = asyncHandler(async(req,res,next)=>{
 });
 
 exports.item_detail = asyncHandler(async(req,res,next)=>{
-    const [items,categories] = await Promise.all([
+    const [item,categories] = await Promise.all([
         Item.findById(req.params.id).populate("category").exec(),
     ]);
-    if (items === null){
+    if (item === null){
         const err = new Error("Item not found");
         err.status = 404;
         return next(err);
     }
     res.render("item_detail", {
-        name: items.name,
-        item: items,
+        name: item.name,
+        item: item,
     });
 });
 
-exports.item_create_get = asyncHandler(async(req,res,next)=>{ //! So when I take away promise.all it displays the categories, but i still cant get it to work all the way
+exports.item_create_get = asyncHandler(async(req,res,next)=>{
     const [item,allCategories] = await Promise.all([Item.findById(req.params.id).populate("category").exec(),Category.find().sort({name:1}).exec()])
     console.log(typeof Category.find)
     res.render("item_form", {title: "Create Item", categorys:allCategories})
@@ -60,7 +60,7 @@ exports.item_create_post = [
     body("desc", "Description must be atleast 10 characters").trim().isLength({minLength:10}).escape(),
     body("stock", "Stock must be a number ").trim().isNumeric().escape(),
     body("price", "Price must be a price").trim().escape(),
-    body("sku", "sku must be a alphanumeric").trim().isAlphanumeric().escape(),
+    body("sku", "sku must be a alphanumeric").trim().escape(),
     body("category.*").escape(),
 
     asyncHandler(async(req,res,next)=>{
@@ -151,7 +151,7 @@ exports.item_update_post = [
     body("desc", "Description must be atleast 10 characters").trim().isLength({minLength:10}).escape(),
     body("stock", "Stock must be a number ").trim().isNumeric().escape(),
     body("price", "Price must be a price").trim().escape(),
-    body("sku", "sku must be a alphanumeric").trim().isAlphanumeric().escape(),
+    body("sku", "Sku must be a alphanumeric").trim().escape(),
     body("category.*").escape(), //todo Need to create a sku area
 
     asyncHandler(async(req,res,next) => {
@@ -167,17 +167,17 @@ exports.item_update_post = [
             _id: req.params.id,
         });
 
-        if (!errors.isEmpty()){ //! Errors isn't defined?
-            const [items,allcategories] = await Promise.all([Category.find().sort({name:1}).exec(),
+        if (!errors.isEmpty()){ 
+            const [items,allcategories] = await Promise.all([,Category.find().sort({name:1}).exec(),
 
             ]);
-            for (const category of allcategories){
+            for (const category of allcategories){ 
                 if(newItem.category.indexOf(category._id) > -1){
                     category.checked = "true";
                 }
             }
             res.render("item_form", {
-                name: "Update Item", categorys: allcategories, item:newItem, errors:erros.array(),
+                name: "Update Item", categorys: allcategories, item:newItem, errors:errors.array(),
             })
             return
         }else{
@@ -186,3 +186,5 @@ exports.item_update_post = [
         }
     })
 ]
+
+//! on item_update_get I think it doesnt give price or sku so somethings wrong with that
