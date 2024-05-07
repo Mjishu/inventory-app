@@ -3,6 +3,7 @@ extends layout
 block content
     h1 Title: #{category.name}
 
+    p Description: #{category.desc}
     div(style="margin-left:20px;margin-top:20px")
 
         h2(style="font-size:1.5rem;") Items
@@ -15,3 +16,9 @@ block content
 
         else 
             p This category has no Items
+
+    hr
+    p 
+        a(href=category.url+"/delete") Delete Category
+    p 
+        a(href=category.url+"/update") Update Category

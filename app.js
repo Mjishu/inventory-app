@@ -50,3 +50,9 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
+//todo: Issues with the c and u parts of CrUd, 
+
+//todo: Something wrong with item_create GET , i put in a number for price and it gives me an error of price must be a number
+//todo:

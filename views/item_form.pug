@@ -7,20 +7,23 @@ block content
     form(method="POST")
         div.form-group
             label(for='name') Item: 
-            input#name.form-control(type="text", placeholder="new item..." name="name" required value=(undefined===item ? "":item.name))
+            input#name.form-control(type="text", placeholder="new item..." name="name" required value=(undefined===newItem ? "":newItem.name)) 
             label(for="desc") Description: 
-            input#desc.form-control(type="text", placeholder="new description...", name="desc", required value=(undefined===item ? "":item.desc))
+            input#desc.form-control(type="text", placeholder="new description...", name="desc", required value=(undefined===newItem ? "":newItem.desc))
             label(for="stock") Stock: 
-            input#stock.form-control(type="number", required, placeholder="1.2.3.." name="stock", value=(undefined===item ? "":item.stock))
+            input#stock.form-control(type="number", required, placeholder="1.2.3.." name="stock", value=(undefined===newItem ? "":newItem.stock))
             label(for="price") Price $:
-            input#price.form-control(type="number", step="0.01", required, placeholder="5.00..." , value=(undefined===item ? "":item.price))
+            input#price.form-control(type="number", step="0.01", required, placeholder="5.00..." , value=(undefined===newItem ? "":newItem.price))
+            label(for="sku") SKU:
+            input#sku.form-control(type="text", required, placeholder="129523..." , value=(undefined===newItem ? "":newItem.sku))
             div.form-group
+            -//console.log(newItem.name+newItem.desc+newItem.stock+newItem.price+newItem.sku)
+            -console.log(newItem)
             label Categories: 
                 div
                         -//(console.log("type:"+typeof categorys))
                         for category in categorys
                             div(style="display:inline;padding-right:10px")
-                            -(console.log("im logging this:" + category + "type is" + typeof category))
 
                                 if category.checked 
                                     input.checkbox-input(type="checkbox",name="category",id=category._id, value=category._id, checked) 
@@ -33,5 +36,5 @@ block content
 
     if errors
         ul
-        for err in errors 
-            li != err.msg
+        for error in errors 
+            li!= error.msg
